@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import os
 from PIL import Image 
+import gc
 
 dataset_root = "D:\Dataset\\breast_cancer\\"
 
@@ -45,6 +46,7 @@ for idx in range(df_train_calc.shape[0]):
         train_dataset_dict['image'].append(image_var)
         train_dataset_dict['labels'].append(df_train_calc['pathology'][idx])
         del(image_var)
+        gc.collect()
 
 
 for idx in range(df_train_mass.shape[0]):
@@ -55,6 +57,7 @@ for idx in range(df_train_mass.shape[0]):
         train_dataset_dict['image'].append(image_var)
         train_dataset_dict['labels'].append(df_train_mass['pathology'][idx])
         del(image_var)
+        gc.collect()
 
 
 for idx in range(df_test_calc.shape[0]):
@@ -70,6 +73,7 @@ for idx in range(df_test_calc.shape[0]):
             validate_dataset_dict['image'].append(Image.open(img_loc).convert('RGB'))
             validate_dataset_dict['labels'].append(df_test_calc['pathology'][idx])
         del(image_var)
+        gc.collect()
         
 for idx in range(df_test_mass.shape[0]):
     img_loc_list = get_image_loc(df_train_calc['image file path'][idx])
@@ -84,6 +88,7 @@ for idx in range(df_test_mass.shape[0]):
             validate_dataset_dict['image'].append(Image.open(img_loc).convert('RGB'))
             validate_dataset_dict['labels'].append(df_test_mass['pathology'][idx])
         del(image_var)
+        gc.collect()
 
 
 dataset = DatasetDict({
